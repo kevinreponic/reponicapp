@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "584137594633",
+    "firebase_url": "https://reponicapp.firebaseio.com",
+    "project_id": "reponicapp",
+    "storage_bucket": "reponicapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584137594633:android:44284c4b661d5662",
+        "android_client_info": {
+          "package_name": "com.reponicapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584137594633-rkej7367as92nhimtua122viaso1gj5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7vn7SuWg9kSQ1h6hqNrlXJBb59qfANQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584137594633-rkej7367as92nhimtua122viaso1gj5v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
