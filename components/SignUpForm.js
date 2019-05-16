@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, Picker } from 'react-native'
 import { Button, Input} from "react-native-elements";
-import { firebase } from "react-native-firebase";
+import { auth, firestore } from "react-native-firebase";
 export class SignUpForm extends Component {
 
   constructor(){
@@ -13,11 +13,13 @@ export class SignUpForm extends Component {
       type : 'personal',
       nameError : '',
       emailError : '',
-      passwordError : ''
+      passwordError : '',
+      authError : ''
     }
   }
 
   validate(){
+    console.log('Hey')
     this.setState({emailError : '', passwordError : '', nameError : ''})
    if(this.state.email == '' || this.state.password == '' || this.state.name == ''){
      if(this.state.email == ''){
@@ -38,6 +40,10 @@ export class SignUpForm extends Component {
        this.setState({emailError : 'Please enter a valid email address'})
        return false
    }
+
+   else{
+     return true
+   }
    
    }
  
@@ -53,8 +59,30 @@ export class SignUpForm extends Component {
      }
 
      else{
+       auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(user=>{
 
-     }
+        firestore().collection('users').add({
+          name : this.state.name,
+          email : this.state.email,
+          type : this.state.type
+        })
+      
+    }).catch(error=>{
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          this.setState({authError : 'Email address is already in use'})
+          break;
+        
+        case 'auth/weak-password' :
+          this.setState({authError : 'Password is not strong enough'})
+          break;
+        default:
+          break;
+      }
+    })
+    
+    }
+    
    }
 
 
@@ -81,7 +109,9 @@ export class SignUpForm extends Component {
         placeholder="Password" placeholderTextColor="#ffffff" secureTextEntry={true} onChangeText={password=>this.setState({password})}/>
         <Button containerStyle={{marginVertical: 10}} buttonStyle={styles.signupBtn} titleStyle={{fontSize : 20}} 
         title="Sign Up" type="outline" raised={true} onPress={()=>this.onSignup()} />
+          <Text style={{color : 'red'}}>{this.state.authError}</Text>
           </View>
+        
     )
   }
 }
